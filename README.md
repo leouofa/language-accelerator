@@ -55,7 +55,7 @@ ruby frequency.rb
 ![Expand Formula Dialog](docs/expand-formula.png)
 
 6. Add the following formula to D2, and expand it all the way down by clicking the blue dot in the corner of the cell.
-```bash
+```
 =A2<>C2
 ```
 
