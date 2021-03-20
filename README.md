@@ -38,10 +38,15 @@ ruby frequency.rb
 ## export.txt file will be created.
 ```
 
+7. Import the file to Google Spreadsheets by heading over to __File__ menu and choosing __Import__.
+8. You will be presented with an import dialog box. Keep the defaults.
+
+[[/docs/image-dialog.png]]
 
 
 
 
 
-#####LICENSE
+
+#### LICENSE
 This project is licensed under the terms of the MIT license.
