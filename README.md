@@ -42,17 +42,17 @@ ruby frequency.rb
 1. Import the file to Google Spreadsheets by heading over to __File__ menu and choosing __Import__.
 2. You will be presented with an import dialog box. Keep the defaults.
 
-<img src="/docs/import-dialog.png" width="50%" />
+<img src="/docs/import-dialog.png" alt="Google Sheets Import Dialog" width="50%" />
 
 3. Add a header row above the newly inserted data.
-![Google Sheet Header](docs/header-translation.png)
+<img src="/docs/header-translation.png" alt="Google Spreadsheet Header" width="70%" />
    
 4. Add the following formula under the cell C2
 ```bash
 =PROPER(GOOGLETRANSLATE(A2,"auto","en"))
 ```
 5. Click on the blue dot, to copy the formula all the way down to the end.
-![Expand Formula Dialog](docs/expand-formula.png)
+<img src="/docs/expand-formula.png" alt="Expand Formula Dialog" width="70%" />
 
 6. Add the following formula to D2, and expand it all the way down by clicking the blue dot in the corner of the cell.
 ```
@@ -62,12 +62,13 @@ ruby frequency.rb
 7. Next, go to __Data__ menu and pick __Create a Filter__. 
 
 8. Now click on the green icon next to _Successful Translation_. Uncheck "False", and click OK.
-<img src="/docs/successful-translation.png" width="50%" />
+<img src="/docs/successful-translation.png" alt="Translation filter on Google Sheets" width="50%" />
    
 9. Now click on the green icon next to the _# of Occurrences_. Pick __Sort Z > A__ and uncheck all occurrences under 10 (or whatever you would like the minimum number of occurrences to be).
-<img src="/docs/occurances.png" width="50%" />
+<img src="/docs/occurances.png" alt="Occurance filter and sort order on google sheets" width="50%" />
 
-10. You're DONE 🥳. You now have a list of words that have been using at least 10 times, along with their translation ordered by the frequency of use.
+#### You're DONE 🥳. 
+You now have a list of words that have been using at least 10 times, along with their translation; ordered by the frequency of use.
 
 
 #### LICENSE
