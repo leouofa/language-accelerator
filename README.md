@@ -54,6 +54,15 @@ ruby frequency.rb
 5. Click on the blue dot, to copy the formula all the way down to the end.
 ![Expand Formula Dialog](docs/expand-formula.png)
 
+6. Add the following formula to D2, and expand it all the way down by clicking the blue dot in the corner of the cell.
+```bash
+=A2<>C2
+```
+
+7. Next, go to __Data__ menu and pick __Create a Filter__. 
+
+8. Now click on the green icon next to Successful Translation. Uncheck "False", and click OK.
+<img src="/docs/successful-translation.png" width="50%" />
 
 
 
