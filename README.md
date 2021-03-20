@@ -42,7 +42,6 @@ ruby frequency.rb
 1. Import the file to Google Spreadsheets by heading over to __File__ menu and choosing __Import__.
 2. You will be presented with an import dialog box. Keep the defaults.
 
-![Google Import Dialog](docs/import-dialog.png)
 <img src="/docs/import-dialog.png" width="50%" />
 
 3. Add a header row above the newly inserted data.
