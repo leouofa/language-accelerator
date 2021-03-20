@@ -38,10 +38,21 @@ ruby frequency.rb
 ## export.txt file will be created.
 ```
 
-7. Import the file to Google Spreadsheets by heading over to __File__ menu and choosing __Import__.
-8. You will be presented with an import dialog box. Keep the defaults.
+## Google Spreadsheets
+1. Import the file to Google Spreadsheets by heading over to __File__ menu and choosing __Import__.
+2. You will be presented with an import dialog box. Keep the defaults.
 
-[[/docs/image-dialog.png]]
+![Google Import Dialog](docs/import-dialog.png)
+
+3. Add a header row above the newly inserted data.
+![Google Sheet Header](docs/header-translation.png)
+   
+4. Add the following formula under the cell C2
+```bash
+=PROPER(GOOGLETRANSLATE(A2,"auto","en"))
+```
+5. Click on the blue dot, to copy the formula all the way down to the end.
+![Expand Formula Dialog](docs/expand-formula.png)
 
 
 
