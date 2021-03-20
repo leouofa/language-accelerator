@@ -61,11 +61,13 @@ ruby frequency.rb
 
 7. Next, go to __Data__ menu and pick __Create a Filter__. 
 
-8. Now click on the green icon next to Successful Translation. Uncheck "False", and click OK.
+8. Now click on the green icon next to _Successful Translation_. Uncheck "False", and click OK.
 <img src="/docs/successful-translation.png" width="50%" />
+   
+9. Now click on the green icon next to the _# of Occurrences_. Pick __Sort Z > A__ and uncheck all occurrences under 10 (or whatever you would like the minimum number of occurrences to be).
+<img src="/docs/occurances.png" width="50%" />
 
-
-
+10. You're DONE 🥳. You now have a list of words that have been using at least 10 times, along with their translation ordered by the frequency of use.
 
 
 #### LICENSE
