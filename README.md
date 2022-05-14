@@ -1,12 +1,11 @@
-# Foregin Language Learning Accelerator
-Language acquisition is hard. This set of ruby scripts aims to make it a little bit easier.
+# Foreign Language Learning Accelerator
+Language acquisition is hard. This set of ruby scripts aims to make it a little bit easier. 
 
 ## The Idea
 Language learning can get boring, so its important to learn from things that interest us.
-This set of scripts can read a PDF file, and output a list of words along with their usage frequency.
+This set of scripts can read a PDF file from any latin script language, and output a list of words along with their usage frequency. Non-latin script languages are currently unsupported. 
 
-You can combine this with a little bit of Google Sheets wizardy and get yourself a list of the most frequently occuring
-words in the document along with their translation.
+You can combine this with a little bit of Google Sheets wizardy and get yourself a list of the most frequently occuring words in the document along with their translation.
 
 ## How to Use It
 
@@ -29,7 +28,7 @@ ruby conver.rb
 ## input.txt file will be created.
 ```
 
-5. If the PDF you've inputted has a cover or a table of content it will be included in the input.txt
+5. If the PDF you've inputted has a cover or a table of contents it will be included in the input.txt.
 You can open the file and manually remove the lines you wish to be excluded from the frequency count.
    
 6. Create a word frequency CSV import for Google Spreadsheets.
@@ -68,7 +67,7 @@ ruby frequency.rb
 <img src="/docs/occurances.png" alt="Occurance filter and sort order on google sheets" width="50%" />
 
 #### You're DONE 🥳. 
-You now have a list of words that have been using at least 10 times, along with their translation; ordered by the frequency of use.
+You now have a list of words that you have been using at least 10 times, along with their translation; ordered by the frequency of use.
 
 
 #### LICENSE
