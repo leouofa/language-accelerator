@@ -17,12 +17,23 @@ Language acquisition is most effective when focused on words you actually encoun
 ## How It Works
 
 ```mermaid
-flowchart LR
-    A["📄 PDF File\ninput.pdf"] -->|"pdf-reader\nextracts text"| B["📝 Text File\ninput.txt"]
-    B -->|"Manual cleanup:\nRemove covers,\nTOC, headers"| C["📊 Word Count\nfiltering"]
-    C -->|"Custom thresholds:\n≥ 3 chars,\nno digits/symbols"| D["📋 CSV File\nexport.csv"]
-    D -->|"Auto-translate:\nGOOGLETRANSLATE\nauto → en"| E["🌐 Translated\nVocabulary"]
-    E -->|"Filter & sort:\nTop words by\nfrequency"| F["✅ Ready to study"]
+flowchart TD
+    A["📄\nPDF\ninput.pdf"] -->|"pdf-reader"| B["📝\nText\ninput.txt"]
+    B -->|"clean up"| C["📊\nWord Count\nfiltering"]
+    C -->|"normalize"| D["📋\nCSV\nexport.csv"]
+    D -->|"GOOGLETRANSLATE"| E["🌐\nTranslated\nVocabulary"]
+    E -->|"filter & sort"| F["✅\nReady to study"]
+
+    noteA["Remove covers,\nTOC, headers"] -. "manual" .- B
+    noteC["≥ 3 chars,\nno digits"] -. "rules" .- C
+    noteE["Filter FALSE,\nsort Z → A"] -. "curate" .- E
+
+    classDef main fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef note fill:#fff8e1,stroke:#f9a825,stroke-width:1px
+    classDef end fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    class A,B,C,D,E main
+    class noteA,noteC,noteE note
+    class F end
 ```
 
 **Output:** A ranked list of the most frequently occurring words in your document, along with their English translations — exactly what you need to focus your study session.
