@@ -16,17 +16,13 @@ Language acquisition is most effective when focused on words you actually encoun
 
 ## How It Works
 
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│   PDF File   │ ──→ │  Text File   │ ──→ │  Word Count  │ ──→ │   CSV File   │ ──→ │  Translated  │
-│  (input.pdf) │     │  (input.txt) │     │  (filtering) │     │(export.csv)  │     │  Vocabulary  │
-└──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
-                         ▲                        ▲                        ▲                        ▲
-                         │                        │                        │                        │
-          Manual cleanup:  │           Custom thresholds: │         Auto-translate:  │       Filter & sort:    │
-          Remove covers,   │           Min 3 chars,        │         GOOGLETRANSLATE  │       Top words by freq │
-          TOC, headers     │           No digits/symbols   │         from auto → en   │       with translations │
-          └────────────────┘           └───────────────────┘         └────────────────┘       └───────────────────┘
+```mermaid
+flowchart LR
+    A["📄 PDF File\ninput.pdf"] -->|"pdf-reader\nextracts text"| B["📝 Text File\ninput.txt"]
+    B -->|"Manual cleanup:\nRemove covers,\nTOC, headers"| C["📊 Word Count\nfiltering"]
+    C -->|"Custom thresholds:\n≥ 3 chars,\nno digits/symbols"| D["📋 CSV File\nexport.csv"]
+    D -->|"Auto-translate:\nGOOGLETRANSLATE\nauto → en"| E["🌐 Translated\nVocabulary"]
+    E -->|"Filter & sort:\nTop words by\nfrequency"| F["✅ Ready to study"]
 ```
 
 **Output:** A ranked list of the most frequently occurring words in your document, along with their English translations — exactly what you need to focus your study session.
