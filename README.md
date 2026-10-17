@@ -1,74 +1,117 @@
 # Foreign Language Learning Accelerator
-Language acquisition is hard. This set of ruby scripts aims to make it a little bit easier. 
 
-## The Idea
-Language learning can get boring, so its important to learn from things that interest us.
-This set of scripts can read a PDF file from any latin script language, and output a list of words along with their usage frequency. Non-latin script languages are currently unsupported. 
+> **Extract vocabulary from any PDF in a Latin-script language and build a personalized, frequency-ranked word list** — then auto-translate it with Google Sheets.
 
-You can combine this with a little bit of Google Sheets wizardy and get yourself a list of the most frequently occuring words in the document along with their translation.
+Language acquisition is most effective when focused on words you actually encounter. This tool automates the extraction of high-frequency vocabulary from any PDF document (books, articles, textbooks) in Latin-script languages, giving you a curated word list ranked by usage. Combined with Google Sheets translation, it becomes a zero-config language learning pipeline.
 
-## How to Use It
+## Features
 
-1. Clone the repository and change your directory to the newly cloned repo.
+- **PDF-to-text extraction** — Parses multi-page PDFs using `pdf-reader` and extracts raw text content
+- **Word frequency analysis** — Tokenizes text, normalizes case, and counts occurrence frequencies
+- **Smart filtering** — Automatically removes noise: words ≤2 characters, numbers, and tokens with special characters
+- **CSV export** — Produces a ready-to-import frequency table (`Word, Count`)
+- **Google Sheets integration** — One-liner workflow to auto-translate every word using `GOOGLETRANSLATE()` and filter results
+- **Zero NLP dependencies** — Pure Ruby with no language models, stemming, or heavy dependencies required
+- **Fully local** — No cloud APIs for extraction; only Google Sheets requires an internet connection for translation
+
+## How It Works
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│   PDF File   │ ──→ │  Text File   │ ──→ │  Word Count  │ ──→ │   CSV File   │ ──→ │  Translated  │
+│  (input.pdf) │     │  (input.txt) │     │  (filtering) │     │(export.csv)  │     │  Vocabulary  │
+└──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+                         ▲                        ▲                        ▲                        ▲
+                         │                        │                        │                        │
+          Manual cleanup:  │           Custom thresholds: │         Auto-translate:  │       Filter & sort:    │
+          Remove covers,   │           Min 3 chars,        │         GOOGLETRANSLATE  │       Top words by freq │
+          TOC, headers     │           No digits/symbols   │         from auto → en   │       with translations │
+          └────────────────┘           └───────────────────┘         └────────────────┘       └───────────────────┘
+```
+
+**Output:** A ranked list of the most frequently occurring words in your document, along with their English translations — exactly what you need to focus your study session.
+
+## Requirements
+
+- Ruby ≥ 2.7.2
+- A PDF document in a Latin-script language (English, Spanish, French, German, etc.)
+
+## Installation
 
 ```bash
 git clone https://github.com/realstorypro/language-accelerator.git
+cd language-accelerator
+bundle install
 ```
 
-2. Run bundler to download dependencies.
+## Usage
+
+### Step 1 — Extract text from your PDF
+
+Place your PDF in the project root and rename it to `input.pdf`. Then run:
+
 ```bash
-bundle
+ruby convert.rb
 ```
 
-3. Copy the PDF you'd like to use and rename it to input.pdf
-4. Convert the PDF into text file.
-```bash
-ruby conver.rb
+This produces `input.txt` with the raw extracted text from all pages.
 
-## input.txt file will be created.
-```
+### Step 2 — Clean up (optional but recommended)
 
-5. If the PDF you've inputted has a cover or a table of contents it will be included in the input.txt.
-You can open the file and manually remove the lines you wish to be excluded from the frequency count.
-   
-6. Create a word frequency CSV import for Google Spreadsheets.
+If the PDF has covers, table of contents, headers, or footers, open `input.txt` and remove the lines you want excluded from the frequency analysis.
+
+### Step 3 — Generate the frequency list
+
 ```bash
 ruby frequency.rb
-## export.txt file will be created.
 ```
 
-## Google Spreadsheets
-1. Import the file to Google Spreadsheets by heading over to __File__ menu and choosing __Import__.
-2. You will be presented with an import dialog box. Keep the defaults.
+This produces `export.csv` with columns: `Word, Count` — words ranked by frequency of occurrence.
 
-<img src="/docs/import-dialog.png" alt="Google Sheets Import Dialog" width="50%" />
+### Step 4 — Translate with Google Sheets
 
-3. Add a header row above the newly inserted data.
-<img src="/docs/header-translation.png" alt="Google Spreadsheet Header" width="70%" />
-   
-4. Add the following formula under the cell C2
-```bash
-=PROPER(GOOGLETRANSLATE(A2,"auto","en"))
-```
-5. Click on the blue dot, to copy the formula all the way down to the end.
-<img src="/docs/expand-formula.png" alt="Expand Formula Dialog" width="70%" />
+1. Open Google Sheets → **File → Import → Upload** → choose `export.csv`
+2. Add a header row above the imported data (e.g., *Word* in A1, *Frequency* in B1)
+3. In cell C2, enter:
 
-6. Add the following formula to D2, and expand it all the way down by clicking the blue dot in the corner of the cell.
-```
-=A2<>C2
-```
+   ```
+   =PROPER(GOOGLETRANSLATE(A2,"auto","en"))
+   ```
 
-7. Next, go to __Data__ menu and pick __Create a Filter__. 
+4. Drag the formula down to fill all rows
+5. In cell D2, enter:
 
-8. Now click on the green icon next to _Successful Translation_. Uncheck "False", and click OK.
-<img src="/docs/successful-translation.png" alt="Translation filter on Google Sheets" width="50%" />
-   
-9. Now click on the green icon next to the _# of Occurrences_. Pick __Sort Z > A__ and uncheck all occurrences under 10 (or whatever you would like the minimum number of occurrences to be).
-<img src="/docs/occurances.png" alt="Occurance filter and sort order on google sheets" width="50%" />
+   ```
+   =A2<>C2
+   ```
 
-#### You're DONE 🥳. 
-You now have a list of words that you have been using at least 10 times, along with their translation; ordered by the frequency of use.
+6. Drag the formula down to filter out words Google couldn't translate (these return the original text)
+7. Apply a filter: **Data → Create a filter**
+8. In the *Successful Translation* column (D), uncheck `FALSE` — this keeps only translated words
+9. In the *Frequency* column (B), sort **Z → A** and exclude entries below your desired threshold (e.g., less than 10 occurrences)
 
+**Done** — you now have a curated vocabulary list of the most important words in your document, with translations, ordered by frequency.
 
-#### LICENSE
-This project is licensed under the terms of the MIT license.
+## Word Frequency Pipeline Details
+
+The `frequency.rb` script processes text through these filtering stages:
+
+| Filter | Rule | Purpose |
+|--------|------|---------|
+| Minimum length | ≥ 3 characters | Removes short function words and noise |
+| Numeric check | Excludes digits (0-9) | Removes dates, numbers, identifiers |
+| Special characters | Alphanumeric only | Strips punctuation and non-word tokens |
+| Case normalization | Lowercase internally, capitalized output | Ensures "The" and "the" are counted together |
+
+**Note:** This tool does not perform stemming, lemmatization, or stop-word removal. Word forms are counted independently (e.g., "run", "running", "runs" are separate entries). For more advanced NLP processing, consider preprocessing the text or post-processing the CSV output.
+
+## Known Limitations
+
+- **Latin scripts only** — Non-Latin scripts (Cyrillic, Arabic, Chinese, Japanese, etc.) are not supported
+- **No stemming** — Different inflections of the same word are counted separately
+- **Hardcoded filenames** — Scripts expect `input.pdf` / `input.txt` / `export.csv` in the project root
+- **No stop-word list** — Common words like "the", "and", "is" may appear in results (filter them in Google Sheets)
+
+## License
+
+This project is licensed under the terms of the MIT License.
