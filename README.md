@@ -30,10 +30,10 @@ flowchart TD
 
     classDef main fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
     classDef note fill:#fff8e1,stroke:#f9a825,stroke-width:1px
-    classDef end fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    classDef final fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
     class A,B,C,D,E main
     class noteA,noteC,noteE note
-    class F end
+    class F final
 ```
 
 **Output:** A ranked list of the most frequently occurring words in your document, along with their English translations — exactly what you need to focus your study session.
